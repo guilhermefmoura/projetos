@@ -207,17 +207,71 @@ class Cliente extends CI_Controller {
                 
                 if(!empty($cliente->email_cliente)){
                     
+                    $html = '<style type="text/css">
+    #thead {
+        width: 100%;
+    }
+    #tituloRelatorio {
+        text-align: center;
+        width: 40%;
+    }
+    #emissao {
+        vertical-align: text-top;
+        text-align: right;
+        font-size: 10pt;
+    }
+    #infocliente {
+        width: 60%;
+        padding-top: 30px;
+    }
+    
+</style>
+<table id="thead">
+    <tbody>
+        <tr>
+            <td><img src="images/logo-geral.png" alt="Logo" /></td>
+            <td id="emissao">Emitido em: 12/11/2013</td>
+        </tr>
+        <tr>
+            <td id="infocliente">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Nome:</td>
+                            <td>Guilherme</td>
+                        </tr>
+                        <tr>
+                            <td>Empresa:</td>
+                            <td>Anima</td>
+                        </tr>
+                        <tr>
+                            <td>Setor:</td>
+                            <td>DTI</td>
+                        </tr>
+                        <tr>
+                            <td>Período da conta:</td>
+                            <td>12/11/2013 à 12/11/2013</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td id="tituloRelatorio">Título do relatório</td>
+        </tr>
+    </tbody>
+</table>
+';
+                    
                     //envia o email
-                    $html = $this->montaHtmlConta();
+                    //$html = $this->montaHtmlConta();
                     
                     //dados para montar o html da página
-                    $data = array(
-                        'htmlPdf' => true,
-                        'html' => $html,
-                        'soma_total' => $this->cliente->somaConta('N'),
-                        'cliente' => $this->cliente->dados_cliente($this->session->userdata('cod_cliente')),
-                        'periodo_conta' => $this->cliente->periodoContaAtual()
-                    );
+//                    $data = array(
+//                        'htmlPdf' => true,
+//                        'html' => $html,
+//                        'soma_total' => $this->cliente->somaConta('N'),
+//                        'cliente' => $this->cliente->dados_cliente($this->session->userdata('cod_cliente')),
+//                        'periodo_conta' => $this->cliente->periodoContaAtual()
+//                    );
 
                     //caminho do diretório
                     $strDir = 'arquivos/pdf/';
@@ -235,37 +289,38 @@ class Cliente extends CI_Controller {
                     $this->html2pdf->paper('a4', 'portrait');
 
                     //Load html view que irá montar o html para geração do pdf
-                    $this->html2pdf->html($this->load->view('imprimir_conta', $data, true));
+                    //$this->html2pdf->html($this->load->view('imprimir_conta', $data, true));
+                    $this->html2pdf->html($html);
                     
                     if($path = $this->html2pdf->create('save')) {
                         
-                        //envia o pdf por email
-                        //DE:
-                        $this->email->from('no-replay@tialourdes.com.br', 'Restaurante Tia Lourdes');
-                        //PARA:
-                        $this->email->to($cliente->email_cliente); 
-                        //ASSUNTO:
-                        $this->email->subject('Conta - Restaurante Tia Lourdes');
-
-                        //MENSAGEM:
-                        $html = '
-                            <p>Olá, '.$cliente->nome_cliente.',</p>
-                            <p>Segue anexo sua conta do Restaurante Tia Lourdes</p>
-                            <p>Qualquer dúvida entre em contato no telefone (31) 3491-9501</p>
-                                ';
-                        $this->email->message($html);   
-
-                        //ANEXO
-                        $this->email->attach($path);
-
-                        //ENVIA
-                        if($this->email->send()){
-
-                            $response = array('mensagem' => 'Email enviado para '.$cliente->email_cliente.'!');
-
-                        }  else {
-                            $response = array('mensagem' => 'Erro ao enviar email!');
-                        }
+//                        //envia o pdf por email
+//                        //DE:
+//                        $this->email->from('no-replay@tialourdes.com.br', 'Restaurante Tia Lourdes');
+//                        //PARA:
+//                        $this->email->to($cliente->email_cliente); 
+//                        //ASSUNTO:
+//                        $this->email->subject('Conta - Restaurante Tia Lourdes');
+//
+//                        //MENSAGEM:
+//                        $html = '
+//                            <p>Olá, '.$cliente->nome_cliente.',</p>
+//                            <p>Segue anexo sua conta do Restaurante Tia Lourdes</p>
+//                            <p>Qualquer dúvida entre em contato no telefone (31) 3491-9501</p>
+//                                ';
+//                        $this->email->message($html);   
+//
+//                        //ANEXO
+//                        $this->email->attach($path);
+//
+//                        //ENVIA
+//                        if($this->email->send()){
+//
+//                            $response = array('mensagem' => 'Email enviado para '.$cliente->email_cliente.'!');
+//
+//                        }  else {
+//                            $response = array('mensagem' => 'Erro ao enviar email!');
+//                        }
                         
                     }  else {
                         $response = array('mensagem' => 'Erro ao gerar arquivo. Email não enviado!');
@@ -277,7 +332,7 @@ class Cliente extends CI_Controller {
                     
                 }
             }
-            
+            $response = array('mensagem' => 'Email enviado... aeee');
             //converte o array para json
             print json_encode($response);
             
