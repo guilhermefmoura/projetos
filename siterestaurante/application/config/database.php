@@ -48,10 +48,12 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'guilhermefmoura.com.br';
-$db['default']['username'] = 'guilherm';
-$db['default']['password'] = '1kin4l';
+/* DESENVOLVIMENTO */
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
 $db['default']['database'] = 'guilherm_tialourdes';
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
