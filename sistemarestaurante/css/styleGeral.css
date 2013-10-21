@@ -1,0 +1,258 @@
+::selection{ background-color: #E13300; color: white; }
+::moz-selection{ background-color: #E13300; color: white; }
+::webkit-selection{ background-color: #E13300; color: white; }
+
+#context {
+    padding: 20px;
+}
+
+.footer-conta {
+    text-align: right;
+}
+
+#table-itens, .table-itens {
+    width: 100%;
+    border: solid 1px #D0D0D0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+td a, li a {
+    text-decoration: none;
+    color: #4F5155;
+}
+
+td a:hover, li a:hover {
+    text-decoration: underline;
+}
+
+thead tr th {
+    text-align: left;
+}
+
+tbody tr td {
+    border-bottom: solid 1px #D0D0D0;
+}
+body {
+    background-color: #fff;
+    margin: 40px;
+    font: 13px/20px normal Helvetica, Arial, sans-serif;
+    color: #4F5155;
+}
+
+a {
+    color: #003399;
+    background-color: transparent;
+    font-weight: normal;
+}
+
+h1 {
+    color: #444;
+    background-color: transparent;
+    border-bottom: 1px solid #D0D0D0;
+    font-size: 19px;
+    font-weight: normal;
+    margin: 0 0 14px 0;
+    padding: 14px 15px 10px 15px;
+}
+
+code {
+    font-family: Consolas, Monaco, Courier New, Courier, monospace;
+    font-size: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #D0D0D0;
+    color: #002166;
+    display: block;
+    margin: 14px 0 14px 0;
+    padding: 12px 10px 12px 10px;
+}
+
+#body{
+    margin: 0 15px 0 15px;
+}
+
+p.footer{
+    text-align: right;
+    font-size: 11px;
+    border-top: 1px solid #D0D0D0;
+    line-height: 32px;
+    padding: 0 10px 0 10px;
+    margin: 20px 0 0 0;
+}
+
+#container{
+    position: relative;
+    margin: 10px;
+    border: 1px solid #D0D0D0;
+    -webkit-box-shadow: 0 0 8px #D0D0D0;
+    overflow: hidden;
+}
+fieldset {
+    border: none;
+}
+
+#caixa-login {
+    margin: 0 auto;
+    width: 400px;
+    border: 1px solid #D0D0D0;
+    padding: 20px;
+    position: relative;
+}
+
+#txt-usuario, #txt-senha {
+    -moz-box-sizing: content-box;
+    border: 1px solid #B2B2B2;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 4px 0 rgba(168, 168, 168, 0.6) inset;
+    margin-top: 4px;
+    padding: 10px 5px 10px 10px;
+    transition: all 0.2s linear 0s;
+    width: 288px;
+}
+
+input[type=text], textarea, select{
+    -moz-box-sizing: content-box;
+    border: 1px solid #B2B2B2;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 4px 0 rgba(168, 168, 168, 0.6) inset;
+    color: #4F5155;
+    margin-top: 4px;
+    padding: 10px 5px 10px 10px;
+    transition: all 0.2s linear 0s;
+    width: 288px;
+}
+
+#btn-entrar {
+    -moz-box-sizing: content-box;
+    border: 1px solid #B2B2B2;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 4px 0 rgba(168, 168, 168, 0.6) inset;
+    margin-top: 14px;
+    padding: 10px 5px 10px 10px;
+    transition: all 0.2s linear 0s;
+    width: 188px;
+}
+
+#frmCadastro fieldset label, .frmCadastro fieldset label {
+    float: left;
+    font-size: 17px;
+    height: 42px;
+    line-height: 42px;
+    width: 130px;
+}
+#caixa-login fieldset label {
+    float: left;
+    font-size: 17px;
+    height: 42px;
+    line-height: 42px;
+    width: 80px;
+}
+
+#info-usuario {
+    position: relative;
+    float: left;
+    width: 25%;
+}
+#logo {
+    position: relative;
+    float: left;
+    width: 15%;
+}
+#menu {
+    position: relative;
+    float: left;
+    width: 57%;
+    padding-top: 30px;
+    padding-left: 3%;
+    font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 11pt;
+    color: #333;
+    z-index: 999;
+}
+#menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: solid 1px #ccc;
+}
+
+#menu ul .li {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 100px;
+    display: block;
+}
+
+#menu li ul {
+    position: absolute;
+    left: 10px;
+    top: 24px;
+    display: none;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+
+
+}
+
+#menu ul li a {
+    display: block;
+    text-decoration: none;
+    color: #666;
+    padding: 5px;
+    border-bottom: 0;
+    width: 100px;
+
+
+}
+
+#menu ul ul {
+    background: #fff;
+    border: solid 1px #ccc;
+}
+
+#menu ul ul li a {
+    width: 130px;
+}
+
+#menu ul ul li a:hover {
+    display: block;
+    text-decoration: none;
+    color: #666;
+    padding: 5px;
+    border-bottom: 0;
+    width: 130px;
+    background: #ccc;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* html #menu ul li { float: left; }
+* html #menu ul li a { height: 1%; }
+/* End */
+
+#menu li:hover ul { display: block; }
+
+.linha {
+    border-bottom: solid 1px #ccc;
+}
+#info-usuario ul {
+    list-style: none;
+}
+
+#paginacao {
+    text-align: right;
+}
+
+#editarLeft, #editarRight {
+    float: left;
+    width: 50%;
+}
+
+#footer-totalgeral {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#accordion {
+    margin-top: 20px;
+}
