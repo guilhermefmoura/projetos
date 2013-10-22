@@ -25,11 +25,13 @@
         <fieldset>
             <label>Comprovante?</label>
             Sim
-            <input type="radio" name="enviaComprovante" id="enviaComprovante"/>
+            <input type="radio" name="enviaComprovante" id="enviaComprovante" value="S"/>
             Não
             <input type="radio" name="enviaComprovante" id="enviaComprovante" checked="checked" value="N"/>
         </fieldset>
         <fieldset>
+            <input type="hidden" name="tipocliente" id="tipocliente" value="<?php print $this->uri->segment("4");?>"/>
+            <input type="hidden" name="codcliente" id="codcliente" value="<?php print $this->uri->segment("3");?>"/>
             <button id="btn-salvar" name="btn-salvar">Salvar</button>
         </fieldset>
     </form>
