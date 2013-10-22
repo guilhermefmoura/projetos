@@ -351,4 +351,22 @@ class Cliente_model extends CI_Model {
         }
     }
     
+    //período da conta em aberto do cliente
+    public function periodoContaAtual($intCodCliente){
+        
+        $sql = "SELECT (SELECT DATE_FORMAT(MIN(dat_compra), '%d/%m/%Y')
+                FROM conta
+                WHERE cod_cliente = $intCodCliente AND
+                          tipo_cliente = 'C' AND 
+                          idt_pagamento = 'N') dat_inicio, (SELECT DATE_FORMAT(MAX(dat_compra), '%d/%m/%Y') 
+                FROM conta
+                WHERE cod_cliente = $intCodCliente AND
+                          tipo_cliente = 'C' AND 
+                          idt_pagamento = 'N') dat_fim FROM DUAL";
+        
+         $query = $this->db->query($sql);
+        
+        return $query->row();
+        
+    }
 }

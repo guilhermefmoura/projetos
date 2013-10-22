@@ -207,71 +207,8 @@ class Cliente extends CI_Controller {
                 
                 if(!empty($cliente->email_cliente)){
                     
-                    $html = '<style type="text/css">
-    #thead {
-        width: 100%;
-    }
-    #tituloRelatorio {
-        text-align: center;
-        width: 40%;
-    }
-    #emissao {
-        vertical-align: text-top;
-        text-align: right;
-        font-size: 10pt;
-    }
-    #infocliente {
-        width: 60%;
-        padding-top: 30px;
-    }
-    
-</style>
-<table id="thead">
-    <tbody>
-        <tr>
-            <td><img src="images/logo-geral.png" alt="Logo" /></td>
-            <td id="emissao">Emitido em: 12/11/2013</td>
-        </tr>
-        <tr>
-            <td id="infocliente">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Nome:</td>
-                            <td>Guilherme</td>
-                        </tr>
-                        <tr>
-                            <td>Empresa:</td>
-                            <td>Anima</td>
-                        </tr>
-                        <tr>
-                            <td>Setor:</td>
-                            <td>DTI</td>
-                        </tr>
-                        <tr>
-                            <td>Período da conta:</td>
-                            <td>12/11/2013 à 12/11/2013</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td id="tituloRelatorio">Título do relatório</td>
-        </tr>
-    </tbody>
-</table>
-';
-                    
                     //envia o email
-                    //$html = $this->montaHtmlConta();
-                    
-                    //dados para montar o html da página
-//                    $data = array(
-//                        'htmlPdf' => true,
-//                        'html' => $html,
-//                        'soma_total' => $this->cliente->somaConta('N'),
-//                        'cliente' => $this->cliente->dados_cliente($this->session->userdata('cod_cliente')),
-//                        'periodo_conta' => $this->cliente->periodoContaAtual()
-//                    );
+                    $html = $this->gerarHtml($cliente->cod_cliente);
 
                     //caminho do diretório
                     $strDir = 'arquivos/pdf/';
@@ -280,7 +217,7 @@ class Cliente extends CI_Controller {
                     $this->html2pdf->folder($strDir);
 
                     //define o nome do arquivo
-                    $strArquivo = date('Hi') . '_' . $this->session->userdata('cod_cliente');
+                    $strArquivo = date('Hi') . '_' . $cliente->cod_cliente;
 
                     //determina o nome do arquivo
                     $this->html2pdf->filename($strArquivo.'.pdf');
@@ -295,32 +232,32 @@ class Cliente extends CI_Controller {
                     if($path = $this->html2pdf->create('save')) {
                         
 //                        //envia o pdf por email
-//                        //DE:
-//                        $this->email->from('no-replay@tialourdes.com.br', 'Restaurante Tia Lourdes');
-//                        //PARA:
-//                        $this->email->to($cliente->email_cliente); 
-//                        //ASSUNTO:
-//                        $this->email->subject('Conta - Restaurante Tia Lourdes');
-//
-//                        //MENSAGEM:
-//                        $html = '
-//                            <p>Olá, '.$cliente->nome_cliente.',</p>
-//                            <p>Segue anexo sua conta do Restaurante Tia Lourdes</p>
-//                            <p>Qualquer dúvida entre em contato no telefone (31) 3491-9501</p>
-//                                ';
-//                        $this->email->message($html);   
-//
-//                        //ANEXO
-//                        $this->email->attach($path);
-//
-//                        //ENVIA
-//                        if($this->email->send()){
-//
-//                            $response = array('mensagem' => 'Email enviado para '.$cliente->email_cliente.'!');
-//
-//                        }  else {
-//                            $response = array('mensagem' => 'Erro ao enviar email!');
-//                        }
+                        //DE:
+                        $this->email->from('no-replay@tialourdes.com.br', 'Restaurante Tia Lourdes');
+                        //PARA:
+                        $this->email->to($cliente->email_cliente); 
+                        //ASSUNTO:
+                        $this->email->subject('Conta - Restaurante Tia Lourdes');
+
+                        //MENSAGEM:
+                        $html = '
+                            <p>Olá, '.$cliente->nome_cliente.',</p>
+                            <p>Segue anexo sua conta do Restaurante Tia Lourdes</p>
+                            <p>Qualquer dúvida entre em contato no telefone (31) 3491-9501</p>
+                                ';
+                        $this->email->message($html);   
+
+                        //ANEXO
+                        $this->email->attach($path);
+
+                        //ENVIA
+                        if($this->email->send()){
+
+                            $response = array('mensagem' => 'Email enviado para '.$cliente->email_cliente.'!');
+
+                        }  else {
+                            $response = array('mensagem' => 'Erro ao enviar email!');
+                        }
                         
                     }  else {
                         $response = array('mensagem' => 'Erro ao gerar arquivo. Email não enviado!');
@@ -332,10 +269,155 @@ class Cliente extends CI_Controller {
                     
                 }
             }
-            $response = array('mensagem' => 'Email enviado... aeee');
+            
             //converte o array para json
             print json_encode($response);
             
+        }
+        
+        public function gerarHtml($intCodCliente){
+            //dados do cliente
+            $cliente = $this->cliente->dadoscliente($intCodCliente);
+            //datas das contas
+            $datas = $this->cliente->periodoContaAtual($intCodCliente);
+            //soma da conta
+            $soma = $this->cliente->somaConta($intCodCliente);
+            //detalhes da das contas
+            $conta_detalhe = $this->cliente->detalheConta($intCodCliente);
+            
+            $html = '';
+            
+            //style
+            $html .= '<style type="text/css">
+                        table {
+                            font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+                            font-size: 14px;
+                        }
+                        #thead {
+                            width: 100%;
+                        }
+                        #tituloRelatorio {
+                            text-align: center;
+                            width: 40%;
+                        }
+                        #emissao {
+                            vertical-align: text-top;
+                            text-align: right;
+                            font-size: 10pt;
+                        }
+                        #infocliente {
+                            padding: 0;
+                            padding-top: 30px;
+                            margin: 0;
+                            margin-bottom: 30px;
+                        }
+                        .detalhesconta {
+                            width: 100%;
+                            border: solid 1px;
+                            margin-bottom: 5px;
+                        }
+
+                        .detalhesconta thead {
+                            background-color: #D0D0D0;
+                        }
+                    </style>';
+            
+            $html .= '<table id="thead">
+                        <tbody>
+                            <tr>
+                                <td><img src="images/logo-geral.png" alt="imgLogo"/></td>
+                                <td id="emissao">Emitido em: '.date('d/m/Y').'</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table id="infocliente">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Nome:</strong></td>
+                                                <td>'.utf8_decode($cliente->nome_cliente).'</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Empresa:</strong></td>
+                                                <td>'.utf8_decode($cliente->nome_empresa).'</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Setor:</strong></td>
+                                                <td>'.utf8_decode($cliente->nome_setor).'</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Período da conta:</strong></td>
+                                                <td>'.$datas->dat_inicio.' à '.$datas->dat_fim.'</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Soma geral:</strong></td>
+                                                <td>R$ '.$soma->valor_geral.'</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td id="tituloRelatorio">LISTA DE DÉBITOS</td>
+                            </tr>
+                        </tbody>
+                    </table>';
+            
+            //Gera os detalhes de cada conta
+            $codconta = '';
+            $coditemconta = '';
+            foreach ($conta_detalhe as $conta):
+                
+                if($conta->cod_conta != $codconta){
+                    
+                    $codconta = $conta->cod_conta;
+                    
+                    $html .= '<table class="detalhesconta">
+                                <tr>
+                                    <td><strong>Detalhes do dia</strong> '.$conta->dat_compra.'</td>
+                                </tr>';
+                    
+                    $html .= '<tr>
+                                <td>
+                                    <table width="100%" style="font-family: Arial, Helvetica, sans-serif; font-size: 10pt;">
+                                        <thead>
+                                            <tr>
+                                                <td><strong>Produto</strong></td>
+                                                <td><strong>Quantidade</strong></td>
+                                                <td><strong>Valor Unitário</strong></td>
+                                                <td><strong>Valor Desconto</strong></td>
+                                                <td><strong>Valor Total</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+                    
+                    foreach ($conta_detalhe as $containfo):
+                        
+                        if($containfo->cod_item_conta != $coditemconta && $codconta == $containfo->cod_conta){
+                            
+                            $coditemconta = $containfo->cod_item_conta;
+                            
+                            $html .= '<tr>
+                                        <td>'.utf8_decode($containfo->nome_produto).'</td>
+                                        <td>'.$containfo->qtd_produto.'</td>
+                                        <td>R$ '.$containfo->valor_unitario.'</td>
+                                        <td>R$ '.$containfo->valor_desconto.'</td>
+                                        <td>R$ '.$containfo->valor_total.'</td>
+                                    </tr>';
+                        }
+                        
+                    endforeach;
+                    
+                    $html .= '</tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><strong>Valor Total: </strong> R$ '.$conta->valor_compra.'</td>
+                            </tr>
+                        </table>';
+                }
+            endforeach;
+            
+            
+            return $html;
         }
 }
 
