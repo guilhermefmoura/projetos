@@ -1,6 +1,9 @@
 $(document).ready(function(){
-    $( "#txt-fechar-conta" ).datepicker();
-    $( "#txt-pagamento-conta" ).datepicker();
+
+    //mascara dos campos
+    $( "#txt-fechar-conta" ).datepicker().mask('00/00/0000');;
+    $( "#txt-pagamento-conta" ).datepicker().mask('00/00/0000');
+    $('#txt-valor-pago').mask("#.##0,00", {reverse: true, maxlength: false});
     
     $('#btn-salvar').click(function(){
         
@@ -10,9 +13,7 @@ $(document).ready(function(){
                     action: $.devUrlBase + "/pagamento/conta",
                     context: jQuery('#frmCadastro'),
                     success: function(data) {
-                        
                         $.devDialog.alert(data.mensagem, 'Aviso');
-                        
                     }
                 });
             
@@ -26,7 +27,7 @@ $(document).ready(function(){
         
         if(!$.devValidacao.isDate(datafechamento)){
             
-            $.devDialog.alert('Preencha o campo "Fechar conta até" corretamente!', 'Aviso');
+            $.devDialog.alert('Preencha o campo "Fechar conta até" com uma data válida!', 'Aviso');
             
             return false;
         }
@@ -35,12 +36,12 @@ $(document).ready(function(){
         
         if(!$.devValidacao.isDate(datafechamento)){
             
-            $.devDialog.alert('Preencha o campo "Pago em" corretamente!', 'Aviso');
+            $.devDialog.alert('Preencha o campo "Pago em" com uma data válida!', 'Aviso');
             
             return false;
         }
         
-        var valorpagamento = $('#txt-pagamento-conta').val();
+        var valorpagamento = $('#txt-valor-pago').val();
         
         if(!$.devValidacao.noEmpty(valorpagamento)){
             

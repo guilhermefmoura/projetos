@@ -9,6 +9,9 @@ class Pagamento extends CI_Controller {
             if(!$this->session->userdata('CLIENTE_AUT')){
                 redirect('/');
             }
+            
+            $this->load->model();
+            
         }
 
     /**
@@ -30,6 +33,15 @@ class Pagamento extends CI_Controller {
 	{
 		$this->template->show('pagamento');
 	}
+        
+        public function conta()
+        {
+            
+            $dados = elements(array('txt-fechar-conta', 'txt-pagamento-conta', 'txt-valor-pago', 'ch-envia-comprovante'), $this->input->post());
+            
+            
+            
+        }
         
 }
 

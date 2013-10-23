@@ -23,11 +23,11 @@
             <input type="text" id="txt-valor-pago" name="txt-valor-pago" />
         </fieldset>
         <fieldset>
-            <label>Comprovante?</label>
-            Sim
-            <input type="radio" name="enviaComprovante" id="enviaComprovante" value="S"/>
-            Não
-            <input type="radio" name="enviaComprovante" id="enviaComprovante" checked="checked" value="N"/>
+            <label>Comprovante:</label>
+            <select id="ch-envia-comprovante" name="ch-envia-comprovante">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
         </fieldset>
         <fieldset>
             <input type="hidden" name="tipocliente" id="tipocliente" value="<?php print $this->uri->segment("4");?>"/>
