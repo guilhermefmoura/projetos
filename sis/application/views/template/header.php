@@ -7,9 +7,6 @@
         <link rel="stylesheet" href="<?php print base_url(); ?>css/jquery-ui-1.10.3.custom.css" type="text/css" media="screen" />
         <link rel="stylesheet" type="text/css" href="<?php print base_url(); ?>js/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 
-        <style type="text/css">
-            
-        </style>
     </head>
     <body>
 

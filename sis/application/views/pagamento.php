@@ -4,7 +4,7 @@
     <form id="frmCadastro">
         <fieldset>
             <label>Cliente</label>
-            <input type="text" disabled="disabled" id="txt-nome" name="txt-nome" value="Guilherme de Freitas Moura"/>
+            <input type="text" disabled="disabled" id="txt-nome" name="txt-nome" value="<?php print utf8_decode($conta->nome_cliente); ?>"/>
         </fieldset>
         <fieldset>
             <label>Fechar conta até</label>
@@ -15,12 +15,20 @@
             <input type="text" id="txt-pagamento-conta" name="txt-pagamento-conta" />
         </fieldset>
         <fieldset>
-            <label>Valor da conta</label>
-            <input type="text" disabled="disabled" id="txt-valor-conta" name="txt-valor-conta" value="R$ 10,00"/>
+            <label>Valor da conta R$ </label>
+            <input type="text" disabled="disabled" id="txt-valor-conta" name="txt-valor-conta" value="<?php print $conta->val_conta; ?>"/>
+            <button id="btn-calcular"></button>
         </fieldset>
         <fieldset>
             <label>Valor pago</label>
             <input type="text" id="txt-valor-pago" name="txt-valor-pago" />
+        </fieldset>
+        <fieldset>
+            <label>Registra crédito:</label>
+            <select id="ch-registra-credito" name="ch-registra-credito">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
         </fieldset>
         <fieldset>
             <label>Comprovante:</label>

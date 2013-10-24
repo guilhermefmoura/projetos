@@ -5,6 +5,30 @@ $(document).ready(function(){
     $( "#txt-pagamento-conta" ).datepicker().mask('00/00/0000');
     $('#txt-valor-pago').mask("#.##0,00", {reverse: true, maxlength: false});
     
+    $('#btn-calcular').button({
+        icons: { primary: "ui-icon-search" }
+    }).css({
+        "width": '35px', 
+        "height": '35px'
+    }).click(function(){
+            var dataconta = $('#txt-fechar-conta').val();
+            var codcliente = $('#codcliente').val();
+            var tpocliente = $('#tipocliente').val();
+            $.devAjax({
+                action: $.devUrlBase + "/pagamento/calcular",
+                data:{
+                    DATACONTA: dataconta,
+                    TPOCLIENTE: tpocliente,
+                    CODCLIENTE: codcliente
+                } ,
+                success: function(data) {
+                    $('#txt-valor-conta').val(data.val_conta);
+                }
+            });
+        
+        return false;
+    });
+    
     $('#btn-salvar').click(function(){
         
         if(validar()){
