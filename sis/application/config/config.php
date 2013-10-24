@@ -15,11 +15,11 @@
 |
 */
 //DTI
-$config['base_url']	= 'http://localhost/Dropbox/ProjetoWeb/desenvolvimento/sistemarestaurante/';
+//$config['base_url']	= 'http://localhost/Dropbox/ProjetoWeb/desenvolvimento/sistemarestaurante/';
 //ONLINE
-//$config['base_url']	= 'http://guilhermefmoura.com.br/ci/';
+//$config['base_url']	= 'http://guilhermefmoura.com.br/si/';
 //CASA
-//$config['base_url']	= 'http://localhost/sistemarestaurante/';
+$config['base_url']	= 'http://localhost/sis/';
 
 /*
 |--------------------------------------------------------------------------

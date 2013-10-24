@@ -531,7 +531,7 @@
      * Inicializando os plugins
      * -------------------------------------------- 
      */
-    $.devUrlBase = $.ajaxSettings.url.replace(/sistemarestaurante(.*)/, 'sistemarestaurante');
+    $.devUrlBase = $.ajaxSettings.url.replace(/sis(.*)/, 'sis');
     $.devShortUrlBase = $.devUrlBase.replace(/index\.php(.*)/, '');
     $.devUrlServer = $.ajaxSettings.url.replace(/\/\/(.*)\/(.*)/, '') + '//' + $.ajaxSettings.url.split("/")[2];
 
