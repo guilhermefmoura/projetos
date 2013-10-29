@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
     //mascara dos campos
-    $( "#txt-fechar-conta" ).datepicker().mask('00/00/0000');;
-    $( "#txt-pagamento-conta" ).datepicker().mask('00/00/0000');
-    $('#txt-valor-pago').mask("#.##0,00", {reverse: true, maxlength: false});
+    $( "#txt_fechar_conta" ).datepicker().mask('00/00/0000');;
+    $( "#txt_pagamento_conta" ).datepicker().mask('00/00/0000');
+    $('#txt_valor_pago').mask("#.##0,00", {reverse: true, maxlength: false});
     
     $('#btn-calcular').button({
         icons: { primary: "ui-icon-search" }
@@ -11,7 +11,7 @@ $(document).ready(function(){
         "width": '35px', 
         "height": '35px'
     }).click(function(){
-            var dataconta = $('#txt-fechar-conta').val();
+            var dataconta = $('#txt_fechar_conta').val();
             var codcliente = $('#codcliente').val();
             var tpocliente = $('#tipocliente').val();
             $.devAjax({
@@ -22,7 +22,7 @@ $(document).ready(function(){
                     CODCLIENTE: codcliente
                 } ,
                 success: function(data) {
-                    $('#txt-valor-conta').val(data.val_conta);
+                    $('#txt_valor_conta').val(data.val_conta);
                 }
             });
         
@@ -47,7 +47,7 @@ $(document).ready(function(){
     
     function validar(){
         
-        var datafechamento = $('#txt-fechar-conta').val();
+        var datafechamento = $('#txt_fechar_conta').val();
         
         if(!$.devValidacao.isDate(datafechamento)){
             
@@ -56,7 +56,7 @@ $(document).ready(function(){
             return false;
         }
         
-        var datafechamento = $('#txt-pagamento-conta').val();
+        var datafechamento = $('#txt_pagamento_conta').val();
         
         if(!$.devValidacao.isDate(datafechamento)){
             
@@ -65,7 +65,7 @@ $(document).ready(function(){
             return false;
         }
         
-        var valorpagamento = $('#txt-valor-pago').val();
+        var valorpagamento = $('#txt_valor_pago').val();
         
         if(!$.devValidacao.noEmpty(valorpagamento)){
             

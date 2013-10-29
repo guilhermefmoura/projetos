@@ -50,31 +50,32 @@ class Pagamento extends CI_Controller {
             $bolComprovante = false;
             
             //dados recebidos no post
-            $dados = elements(array('txt-fechar-conta', 'txt-pagamento-conta', 'txt-valor-pago', 'ch-registra-credito', 'ch-envia-comprovante', 'codcliente', 'tipocliente'), $this->input->post());
-        
+            $dados = elements(array('txt_fechar_conta', 'txt_pagamento_conta', 'txt_valor_pago', 'ch_registra_credito', 'ch_envia_comprovante', 'codcliente', 'tipocliente'), $this->input->post());
+
             //envia email de comprovante
-            if($dados['ch-envia-comprovante']=== 'S'){
+            if($dados['ch_envia_comprovante']=== 'S'){
                 $bolComprovante = true;
             }
             
             //formata a data
-            $strDate = $this->pagamento->date_format($dados['txt-fechar-conta']);
+            $strDate = $this->pagamento->date_format($dados['txt_fechar_conta']);
         
             //recupera valor da conta
             $objDadosConta = $this->pagamento->buscarDadosPagamento($dados['codcliente'], $dados['tipocliente'], "'$strDate'");
         
             //calcular troco
-            $strTroco = str_replace(',', '.', $dados['txt-valor-pago']) - str_replace(',', '.', $objDadosConta->val_conta);
+            $strTroco = str_replace(',', '.', $dados['txt_valor_pago']) - str_replace(',', '.', $objDadosConta->val_conta);
             $strTroco = number_format($strTroco, 2, '.', ',');
             
             //verifica se terá troco
             if($strTroco > 0){
 
                 //verifica se registra crédito
-                if($dados['ch-registra-credito'] == 'S'){
+                if($dados['ch_registra_credito'] == 'S'){
 
                     //registra o valor de troco como crédito para o cliente
                     $response['mensagem'] = 'Vai registrar '. $strTroco. ' como credito na conta';
+                    $response = $this->pagamento->gravarPagamentoComCredito($dados, $objDadosConta, $strTroco);
 
                 }
                 else
