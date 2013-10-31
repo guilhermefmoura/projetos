@@ -47,68 +47,111 @@ class Pagamento extends CI_Controller {
         
         public function conta()
         {
+            /*==============================================================*
+             * declaração do indicador para envio de comprovante por email
+             *==============================================================*/
             $bolComprovante = false;
             
-            //dados recebidos no post
+            /*==============================================================*
+             * recupera os dados passados por post
+             *==============================================================*/
             $dados = elements(array('txt_fechar_conta', 'txt_pagamento_conta', 'txt_valor_pago', 'ch_registra_credito', 'ch_envia_comprovante', 'codcliente', 'tipocliente'), $this->input->post());
 
-            //envia email de comprovante
+            /*==============================================================*
+             * verifica se deverá enviar comprovante
+             *==============================================================*/
             if($dados['ch_envia_comprovante']=== 'S'){
                 $bolComprovante = true;
             }
             
-            //formata a data
+            /*==============================================================*
+             * formata a data de fechamento da conta para ser usada na query
+             *==============================================================*/
             $strDate = $this->pagamento->date_format($dados['txt_fechar_conta']);
         
-            //recupera valor da conta
+            /*==============================================================*
+             * recupera as informações da conta de acordo com os dados passados
+             *==============================================================*/
             $objDadosConta = $this->pagamento->buscarDadosPagamento($dados['codcliente'], $dados['tipocliente'], "'$strDate'");
         
-            //calcular troco
+            /*==============================================================*
+             * calcula e formata o troco
+             *==============================================================*/
             $strTroco = str_replace(',', '.', $dados['txt_valor_pago']) - str_replace(',', '.', $objDadosConta->val_conta);
             $strTroco = number_format($strTroco, 2, '.', ',');
             
-            //verifica se terá troco
+            /*==============================================================*
+             * verifica através do valor de troco a ação que será feita
+             *==============================================================*/
             if($strTroco > 0){
 
-                //verifica se registra crédito
+                /*===========================================================*
+                 * Se terá troco verifica se o troco deverá ser cadastrado 
+                 * como crédito na conta do cliente
+                 *===========================================================*/
                 if($dados['ch_registra_credito'] == 'S'){
-
-                    //registra o valor de troco como crédito para o cliente
-                    $response['mensagem'] = 'Vai registrar '. $strTroco. ' como credito na conta';
-                    $response = $this->pagamento->gravarPagamentoComCredito($dados, $objDadosConta, $strTroco);
+                    
+                    /*=================================================*
+                     * converte e formata o troco para cadastro
+                     *=================================================*/
+                    $strTroco = number_format($strTroco * (-1),2, '.', ',');
+                    
+                    /*===================================================*
+                     * grava o pagamento e registra o crédito
+                     *===================================================*/
+                    $this->pagamento->gravarPagamentoComCredito($dados, $objDadosConta, $strTroco);
+                    
+                    $response->mensagem = 'Pagamento registrado com sucesso! Credito registrado na conta!';
 
                 }
                 else
                 {
-                    $response['mensagem'] = 'Nao registrar '. $strTroco. ' como troco';
+                    /*=========================================================*
+                     * grava pagamento sem registrar crédito
+                     *=========================================================*/
+                     $this->pagamento->gravarPagamentoSemCredito($dados, $objDadosConta);
+                    
+                     $response->mensagem = 'Pagamento registrado com sucesso!';
                 }
 
             }
             else
             {
-                //verifica se registra débito na conta ou somente baixa
                 if($strTroco === '0.00'){
 
-                    //executa a baixa na conta do cliente
-                    $response['mensagem'] = 'Vai registrar baixa pois nao tem troco '. $strTroco. '.';
+                    /*=============================================*
+                    * grava pagamento
+                    *=============================================*/
+                    $this->pagamento->gravarPagamentoSemCredito($dados, $objDadosConta);
+                    
+                    $response->mensagem = 'Pagamento registrado com sucesso!';
                 }
                 else 
                 {
-                    //executa a baixa e grava saldo devedor na conta do cliente
-                    $response['mensagem'] = 'Vai registrar baixa e gravar saldo devedor '. $strTroco. ' como troco';
+                    /*=================================================*
+                     * converte e formata o saldo devedor para cadastro
+                     *=================================================*/
+                    $strSaldoDevedor = number_format($strTroco * (-1),2, '.', ',');
+                    
+                    /*===================================================*
+                     * grava o pagamento e registra o crédito
+                     *===================================================*/
+                    $this->pagamento->gravarPagamentoComSaldoDevedor($dados, $objDadosConta, $strSaldoDevedor);
+                    
+                    $response->mensagem = 'Pagamento registrado com sucesso! Saldo devedor registrado na conta!';
 
                 }
             }
 
-            //envia email
+            
             if($bolComprovante)
             {
                 
-                $response['mensagem'] = $response['mensagem'] . ' e vai mandar email';
+                //adicionar o código para enviar email com o comprovante
 
             }
             
-            
+            $response->codcliente = $dados['codcliente'];
             
             //converte o array para json
             print json_encode($response);

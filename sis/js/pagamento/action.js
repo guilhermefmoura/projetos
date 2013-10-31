@@ -37,7 +37,12 @@ $(document).ready(function(){
                     action: $.devUrlBase + "/pagamento/conta",
                     context: jQuery('#frmCadastro'),
                     success: function(data) {
-                        $.devDialog.alert(data.mensagem, 'Aviso');
+                        $.devDialog.success(data.mensagem, 'Aviso',
+                            function(){
+                                var url = $.devUrlBase + '/cliente/editar/' + data.codcliente;
+                                window.location.href = url;
+                            }
+                    );
                     }
                 });
             
