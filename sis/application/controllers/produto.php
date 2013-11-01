@@ -43,6 +43,11 @@ class Produto extends CI_Controller {
             
         }
         
+        public function fancybox()
+        {
+            $this->load->view('produto');
+        }
+        
 }
 
 /* End of file welcome.php */

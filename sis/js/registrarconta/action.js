@@ -1,20 +1,75 @@
 $(document).ready(function(){
     $('#btn-pesquisar').click(function(){
-        var cliente = $('#hidden-intCliente').val();
-        cliente = true;
-        if(cliente){   
-            $.devDialog.wait.open();
-            
-            var url = 'registrarconta/adicionar/' + cliente;
-            window.location.href = url;
-            
-        }else {
-            $.devDialog.alert('Selecione um cliente', 'Aviso');
-            return false;
-        }
+        
+        var nome = $("#txt-buscar").val();
+        
+        $.devAjax({
+           action: $.devUrlBase + '/registrarconta/buscarclientes',
+           data: {
+               NOME: nome
+           },
+           success: function(response){
+               $("#tblClientes").html(response.HTML);
+           }
+        });
+        
+        return false;
     });
     
     $( "#txt-data-compra" ).datepicker();
     
+    $('.btn-desconto').fancybox({
+                enableEscapeButton: true,
+		fitToView	: false,
+		autoSize	: true,
+		closeClick	: false,
+		openEffect	: 'none',
+		closeEffect	: 'none',
+                iframe : {
+                    preload: true
+                }
+                
+	});
+    
+    $('.btn-visualizar-conta').fancybox({
+                enableEscapeButton: true,
+		fitToView	: false,
+		autoSize	: true,
+		closeClick	: false,
+		openEffect	: 'none',
+		closeEffect	: 'none',
+                iframe : {
+                    preload: true
+                }
+                
+	});
+        
+        $('.btn-editar').fancybox({
+                enableEscapeButton: true,
+		fitToView	: false,
+		autoSize	: true,
+		closeClick	: false,
+		openEffect	: 'none',
+		closeEffect	: 'none',
+                iframe : {
+                    preload: true
+                }
+                
+	});
+        
+        $('.btn-produtos').fancybox({
+                enableEscapeButton: true,
+		fitToView	: false,
+		autoSize	: true,
+		closeClick	: false,
+		openEffect	: 'none',
+		closeEffect	: 'none',
+                iframe : {
+                    preload: true
+                }
+                
+	}).button({
+            icons: { primary: "ui-icon-grip-dotted-vertical" }
+        });
 });
 

@@ -9,23 +9,11 @@ class Registrarconta extends CI_Controller {
             if(!$this->session->userdata('CLIENTE_AUT')){
                 redirect('/');
             }
+            
+            $this->load->model('registrarconta_model', 'registrar');
+            $this->load->model('cliente_model', 'cliente');
         }
 
-    /**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
 		$this->template->show('registrar_conta');
@@ -33,8 +21,81 @@ class Registrarconta extends CI_Controller {
         
         public function adicionar()
 	{
-		$this->template->show('registrar_conta_adicionar');
+                $intCodCliente = $this->uri->segment("3");
+                
+                //verificar se já existe uma conta temporária
+                $intCodTempConta = $this->registrar->existeContaTemporaria($intCodCliente);
+                
+                if(empty($intCodTempConta->codtempconta)){
+                    //gravar na tabela temporária uma conta
+                    $this->registrar->gravarContaTemporaria($intCodCliente);
+                    
+                    //verificar se já existe uma conta temporária
+                    $intCodTempConta = $this->registrar->existeContaTemporaria($intCodCliente);
+                    
+                }                
+                
+                //busca dados do cliente
+                $arrCliente = $this->cliente->dadosCliente($intCodCliente);
+                
+                $dados = array('codtempconta' => $intCodTempConta->codtempconta, 'cliente' => $arrCliente);
+                
+		$this->template->show('registrar_conta_adicionar', $dados);
 	}
+        
+        public function buscarclientes()
+        {
+            $dados = elements(array('NOME'), $this->input->post());
+            
+            $arrClientes = $this->registrar->buscarCliente($dados);
+            
+            $html_cliente = '';
+            $html = '';
+            
+            $html .= '
+                    <table  id="tblbuscarcliente">
+                        <thead>
+                            <tr>
+                                <th>Nome do cliente</th>
+                                <th>Matr&iacute;cula</th>
+                                <th>Empresa</th>
+                                <th>Setor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                ';
+            
+            foreach ($arrClientes as $cliente):
+                
+                $html_cliente .= "
+                    <tr>
+                        <td><a href='".base_url()."registrarconta/adicionar/$cliente->codcliente'>$cliente->nomecliente</a></td>
+                        <td><a href='".base_url()."registrarconta/adicionar/$cliente->codcliente'>$cliente->matricula</a></td>
+                        <td><a href='".base_url()."registrarconta/adicionar/$cliente->codcliente'>$cliente->nomeempresa</a></td>
+                        <td><a href='".base_url()."registrarconta/adicionar/$cliente->codcliente'>$cliente->nomesetor</a></td>
+                    </tr>
+                    ";
+                
+            endforeach;
+            
+            if(empty($html_cliente)){
+                $html_cliente = "
+                    <tr>
+                        <td colspan='4' style='text-align:center;'>Nenhum cliente encontrado com o nome <strong>$dados[NOME]</strong>.</td>
+                    </tr>
+                    ";
+            }
+            
+            $html .= $html_cliente;
+            
+            $html .= "</tbody>
+                </table>";
+            
+            $response->HTML = $html;
+            
+            print json_encode($response);
+            
+        }
 }
 
 /* End of file welcome.php */
