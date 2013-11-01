@@ -15,9 +15,9 @@
 |
 */
 //DTI
-//$config['base_url']	= 'http://localhost/Dropbox/ProjetoWeb/desenvolvimento/sistemarestaurante/';
+//$config['base_url']	= 'http://localhost/github/projetos/sis/';
 //ONLINE
-//$config['base_url']	= 'http://guilhermefmoura.com.br/si/';
+//$config['base_url']	= 'http://guilhermefmoura.com.br/sis/';
 //CASA
 $config['base_url']	= 'http://localhost/sis/';
 
