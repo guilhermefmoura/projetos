@@ -7,7 +7,7 @@ class Desconto extends CI_Controller {
             
             //verifica se existe uma sessão ativa
             if(!$this->session->userdata('CLIENTE_AUT')){
-                redirect('/');
+                redirect(base_url());
             }
         }
 
@@ -30,6 +30,12 @@ class Desconto extends CI_Controller {
 	{
 		$this->load->view('desconto');
 	}
+        
+        
+        public function descontofancybox()
+        {
+            $this->load->view('desconto');
+        }
 }
 
 /* End of file welcome.php */

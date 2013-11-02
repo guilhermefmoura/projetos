@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="<?php print css_default(); ?>" type="text/css" media="screen" />        
-<link rel="stylesheet" href="<?php print css_jquery_ui(); ?>" type="text/css" media="screen" />
+<?php print css_default(); ?>
+<?php print css_jquery_ui(); ?>
 <div id="context">
     <h1><?php print $titulo; ?></h1>
     <div id="accordion">
@@ -60,7 +60,7 @@
         <p>Total Geral R$ <?php print $soma_conta->valor_geral;?></p>
     </div>
 </div>
-<script src="<?php print js_jquery(); ?>" type="text/javascript"></script>
-<script src="<?php print js_jquery_ui(); ?>" type="text/javascript"></script>
-<script src="<?php print js_action(); ?>" type="text/javascript"></script>
-<script src="<?php print js_action_controller($this->router->fetch_class()); ?>" type="text/javascript"></script>
+<?php print js_jquery(); ?>
+<?php print js_jquery_ui(); ?>
+<?php print js_action(); ?>
+<?php print js_action_controller($this->router->fetch_class()); ?>

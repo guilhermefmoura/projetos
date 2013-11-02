@@ -73,7 +73,7 @@ if ( ! function_exists('css_jquery_ui'))
 	function css_jquery_ui($uri = '')
 	{
 		$CI =& get_instance();
-		return $CI->config->css_jquery_ui($uri);
+		return '<link rel="stylesheet" href="'.$CI->config->css_jquery_ui($uri).'" type="text/css" media="screen" />';
 	}
 }
 
@@ -82,7 +82,7 @@ if ( ! function_exists('css_default'))
 	function css_default($uri = '')
 	{
 		$CI =& get_instance();
-		return $CI->config->css_default($uri);
+		return '<link rel="stylesheet" href="'.$CI->config->css_default($uri).'" type="text/css" media="screen" />';
 	}
 }
 
@@ -91,7 +91,7 @@ if ( ! function_exists('js_jquery_ui'))
 	function js_jquery_ui($uri = '')
 	{
 		$CI =& get_instance();
-		return $CI->config->js_jquery_ui($uri);
+		return '<script src="'.$CI->config->js_jquery_ui($uri).'" type="text/javascript"></script>';
 	}
 }
 
@@ -100,7 +100,7 @@ if ( ! function_exists('js_jquery'))
 	function js_jquery($uri = '')
 	{
 		$CI =& get_instance();
-		return $CI->config->js_jquery($uri);
+		return '<script src="'.$CI->config->js_jquery($uri).'" type="text/javascript"></script>';
 	}
 }
 
@@ -109,7 +109,7 @@ if ( ! function_exists('js_action'))
 	function js_action($uri = '')
 	{
 		$CI =& get_instance();
-		return $CI->config->js_action($uri);
+		return '<script src="'.$CI->config->js_action($uri).'" type="text/javascript"></script>';
 	}
 }
 
@@ -136,7 +136,7 @@ if ( ! function_exists('js_action_controller'))
 	function js_action_controller($controller)
 	{
 		$CI =& get_instance();
-		return $CI->config->url_dir_js().$controller.$CI->config->file_js_default();
+		return '<script src="'.$CI->config->url_dir_js().$controller.$CI->config->file_js_default().'" type="text/javascript"></script>';;
 	}
 }
 // ------------------------------------------------------------------------
