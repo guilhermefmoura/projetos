@@ -85,7 +85,28 @@ class Cliente extends CI_Controller {
                 'soma_conta' => $this->cliente->somaConta($intCodCliente)
             );
             
-            $this->template->show('visualizar_conta_cliente', $dados);
+            if($this->uri->segment("4") != 'fancybox'){
+                $this->template->show('visualizar_conta_cliente', $dados);
+            }
+            else {
+                $this->load->view('visualizar_conta_cliente_fancybox', $dados);
+            }
+            
+        }
+        
+        public function visualizarcontafancybox(){
+            
+            $intCodCliente = $this->uri->segment("3");
+            
+            $arrDadosCliente = $this->cliente->dadosCliente($intCodCliente);
+            
+            $dados = array(
+                'titulo' => 'Visualizar Conta - '. utf8_decode($arrDadosCliente->nome_cliente),
+                'conta_detalhe' => $this->cliente->detalheConta($intCodCliente),
+                'soma_conta' => $this->cliente->somaConta($intCodCliente)
+            );
+            
+            $this->load->view('visualizar_conta_cliente_fancybox', $dados);
             
         }
         

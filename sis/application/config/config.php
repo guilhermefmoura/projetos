@@ -362,6 +362,13 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+$config['css_default'] = $config['base_url'].'css/styleGeral.css';
+$config['css_jquery_ui'] = $config['base_url'].'css/jquery-ui-1.10.3.custom.css';
+$config['js_jquery_ui'] = $config['base_url'].'js/jquery-ui-1.10.3.custom.js';
+$config['js_jquery'] = $config['base_url'].'js/jquery-1.9.1.js';
+$config['js_action'] = $config['base_url'].'js/jquery-action.js';
+$config['url_dir_js'] = $config['base_url'].'js/';
+$config['file_js_default'] = '/action.js';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

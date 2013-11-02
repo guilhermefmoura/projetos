@@ -281,7 +281,98 @@ class CI_Config {
 	{
 		return $this->slash_item('base_url').ltrim($this->_uri_string($uri), '/');
 	}
+        
+        /**
+	 * CSS URL Jquery UI
+	 * Returns css_jquery_ui [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function css_jquery_ui()
+	{
+		return rtrim($this->slash_item('css_jquery_ui'), '/');
+	}
+        
+        /**
+	 * CSS URL Default
+	 * Returns css_default [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function css_default()
+	{
+		return rtrim($this->slash_item('css_default'), '/');
+	}
+        
+        /**
+	 * JS URL JqueryUI
+	 * Returns js_jquery_ui [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function js_jquery_ui()
+	{
+		return rtrim($this->slash_item('js_jquery_ui'), '/');
+	}
 
+        /**
+	 * JS URL Jquery
+	 * Returns js_jquery [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function js_jquery()
+	{
+		return rtrim($this->slash_item('js_jquery'), '/');
+	}
+        
+        /**
+	 * JS URL Jquery
+	 * Returns js_jquery [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function js_action()
+	{
+		return rtrim($this->slash_item('js_action'), '/');
+	}
+        
+        /**
+	 * JS URL Jquery
+	 * Returns js_jquery [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function url_dir_js()
+	{
+		return $this->slash_item('url_dir_js');
+	}
+        
+        /**
+	 * JS URL Jquery
+	 * Returns js_jquery [. uri_string]
+	 *
+	 * @access public
+	 * @param string $uri
+	 * @return string
+	 */
+	function file_js_default()
+	{
+		return rtrim($this->slash_item('file_js_default'), '/');
+	}
+        
 	// -------------------------------------------------------------
 
 	/**

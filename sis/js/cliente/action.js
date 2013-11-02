@@ -112,7 +112,7 @@ $(document).ready(function(){
     });
     
     $(".conta").click(function(){
-        
+
         var codconta = $(this).attr('codconta');
         
         $.devDialog.check(function(){

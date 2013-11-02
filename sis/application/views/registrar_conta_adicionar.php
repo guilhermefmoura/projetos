@@ -23,7 +23,7 @@
     </div>
     <div id="editarRight">
         <h1>Atalhos</h1>
-        <a href="<?php print base_url(); ?>cliente/visualizarcontafancybox/10" class="btn-visualizar-conta" id="btn-visualizar-conta" data-fancybox-type="iframe">Visualizar Conta</a>
+        <a href="<?php print base_url(); ?>cliente/visualizarcontafancybox/<?php print utf8_decode($cliente->cod_cliente); ?>" class="btn-visualizar-conta" id="btn-visualizar-conta" data-fancybox-type="iframe">Visualizar Conta</a>
         <a href="<?php print base_url(); ?>desconto/fancybox/10/C" id="btn-desconto" class="btn-desconto" data-fancybox-type="iframe">Desconto em produto</a>
         <a href="<?php print base_url(); ?>cliente/editarfancybox/10" class="btn-editar" id="btn-editar" data-fancybox-type="iframe">Editar Cliente</a>
         <a href="<?php print base_url(); ?>produto/fancybox" class="btn-produtos" id="btn-produtos" data-fancybox-type="iframe">Produtos</a>
